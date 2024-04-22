@@ -3,6 +3,11 @@ Toby's DWM config
 
 Enjoy a small window manager with actual sane defaults.
 
+Default Programs
+------------------
+
+Kitty, dmenu, picom 
+
 Read the original README below
 
 
