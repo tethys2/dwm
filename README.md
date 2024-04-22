@@ -3,7 +3,7 @@ Toby's DWM config
 
 Enjoy a small window manager with actual sane defaults.
 
-Read the origional README below
+Read the original README below
 
 
 dwm - dynamic window manager
