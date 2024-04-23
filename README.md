@@ -6,7 +6,7 @@ Enjoy a small window manager with actual sane defaults.
 Default Programs
 ------------------
 
-Kitty, dmenu, picom 
+Kitty, dmenu, picom, xwallpaper 
 
 Read the original README below
 
