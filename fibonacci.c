@@ -32,35 +32,35 @@ fibonacci(Monitor *m) {
 		}
 		else{
 			//make sure this is not the last window
-			if(i < n -1 ){
-				//for some reason doesn't work
-				//if((((i - m->nmaster) % 2 == 0) && (h/2 - (m->gappx)/2 - (2*c->bw) < 1)) || (((i - m->nmaster) % 2 == 1) && (w/2 - (m->gappx)/2 - (2*c->bw)< 1)))
-				//	return;
+			if(i < n -1){
 				//switch between 4 different kinds of splits repeating after the masters
 				//each split decreases the size and then moves the next window top corner
 				//this makes handling the last window really easy
 				switch((i - m->nmaster) % 4){
 					case 0:
-						if(h/2 - (m->gappx)/2 > 0)
 						h /= 2;
-						h -= (m->gappx)/2;
+						if(h > (m->gappx/2))
+							h -= (m->gappx)/2;
 						resize(c, m->wx + x, m->wy + y, w - (2*c->bw), h - (2*c->bw), 0);
 						y += h + m->gappx;
 						break;
 					case 1:	
 						w /= 2;
-						w -= (m ->gappx)/2;
+						if(w > (m ->gappx)/2)
+							w -= (m ->gappx)/2;
 						resize(c, m->wx + x + w + m->gappx, m->wy + y, w - (2*c->bw), h - (2*c->bw), 0);
 						break;
 					case 2:
 						h /= 2;
-						h -= (m->gappx)/2;
+						if(h > (m->gappx/2))
+							h -= (m->gappx)/2;
 						resize(c, m->wx + x, m->wy + y + h + (m->gappx), w - (2*c->bw), h - (2*c->bw), 0);
 
 						break;
 					case 3:
 						w /= 2;
-						w -= (m->gappx)/2;
+						if(w > (m ->gappx)/2)
+							w -= (m ->gappx)/2;
 						resize(c, m->wx + x, m->wy + y, w - (2*c->bw), h - (2*c->bw), 0);
 						x += w + (m ->gappx);
 						break;
