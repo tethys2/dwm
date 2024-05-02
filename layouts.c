@@ -73,4 +73,50 @@ fibonacci(Monitor *m) {
 		}
 }
 
+void
+mtile(Monitor *m)
+{
+	unsigned int i, n, whenover, overh, tmp, x, y, w, h, mh, mw, my;
+	Client *c;
+
+	for (n = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), n++);
+	if (n == 0)
+		return;
+
+	if (n > m->nmaster){
+		mw = m->nmaster ? m->ww * m->mfact : 0;
+
+		x = mw + m ->gappx;
+		y = m ->gappx;
+		// calculates the regular height then divides by the number of windows in each column
+		h = ((m ->wh) - 2 * (m ->gappx)) / ((n- (m->nmaster)) / (m->ntile));
+		if (h - (tmp = (m->gappx) * ((n- (m->nmaster)) / (m->ntile))) > 0)
+			h -= tmp;
+		//if there is extra
+		if((n - m->nmaster) % (m ->ntile)){ 
+			overh = ((m ->wh) - 2 * (m ->gappx)) / ((n- (m->nmaster)) / (m->ntile) + 1);
+			if (overh - (tmp = ((m->gappx) * ((n- (m->nmaster)) / (m->ntile) + 1))) > 0)
+				overh -= tmp;
+		}
+		// calculates the regular width then divides by the number of tiles and subtracts ntile many gaps
+		w = ((m ->ww) - mw - 2* (m ->gappx)) / (m->ntile) - (m ->ntile) * (m->gappx); 
+		if (w - (tmp = ((m->gappx) * (m->ntile))) > 0)
+				w -= tmp;
+		//number of columes without extra times the number in each tile with extra
+		whenover = ((m->ntile) - (m->ntile) % n) * ((n- (m->nmaster)) / (m->ntile));
+	}
+	else
+		mw = m->ww - m->gappx;
+	for (i = 0, my = m->gappx, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++)
+		if (i < m->nmaster) {
+			mh = (m->wh - my) / (MIN(n, m->nmaster) - i) - m->gappx;
+			resize(c, m->wx + m->gappx, m->wy + my, mw - (2*c->bw) - m->gappx, mh - (2*c->bw), 0);
+			if (my + HEIGHT(c) + m->gappx < m->wh)
+				my += HEIGHT(c) + m->gappx;
+		} else {
+			resize(c, m->wx + x, m->wy + y, w - (2*c->bw), h - (2*c->bw), 0);
+		}
+}
+
+
 

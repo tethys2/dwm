@@ -115,6 +115,7 @@ struct Monitor {
 	char ltsymbol[16];
 	float mfact;
 	int nmaster;
+	int ntile;
 	int num;
 	int by;               /* bar geometry */
 	int mx, my, mw, mh;   /* screen size */
@@ -177,6 +178,7 @@ static int gettextprop(Window w, Atom atom, char *text, unsigned int size);
 static void grabbuttons(Client *c, int focused);
 static void grabkeys(void);
 static void incnmaster(const Arg *arg);
+static void incntile(const Arg *arg);
 static void keypress(XEvent *e);
 static void killclient(const Arg *arg);
 static void manage(Window w, XWindowAttributes *wa);
@@ -671,6 +673,7 @@ createmon(void)
 	m->tagset[0] = m->tagset[1] = 1;
 	m->mfact = mfact;
 	m->nmaster = nmaster;
+	m->ntile = ntile;
 	m->showbar = showbar;
 	m->topbar = topbar;
 	m->gappx = gappx;
@@ -1016,6 +1019,14 @@ incnmaster(const Arg *arg)
 	selmon->nmaster = MAX(selmon->nmaster + arg->i, 0);
 	arrange(selmon);
 }
+
+void
+incntile(const Arg *arg)
+{
+	selmon->ntile = MAX(selmon->ntile + arg->i, 0);
+	arrange(selmon);
+}
+
 
 #ifdef XINERAMA
 static int

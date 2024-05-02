@@ -44,14 +44,15 @@ static const Rule rules[] = {
 /* layout(s) */
 static const float mfact     = 0.5; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
+static const int ntile = 2; /* number of stacks */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
 
-#include "fibonacci.c"
+#include "layouts.c"
 static const Layout layouts[] = {
 	/* symbol     arrange function */
  	{ "[@]",      fibonacci },
-	{ "[]=",      tile },    /* first entry is default */
+	{ "[]=",      mtile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
 
@@ -83,11 +84,13 @@ static const Key keys[] = {
 	{ MODKEY,             		XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,             		XK_w, spawn,          {.v = webcmd } },
 	{ MODKEY,             		XK_e, spawn,          {.v = emojicmd }},
-	{ MODKEY,                       XK_b,      togglebar,      {0} },
+	{ MODKEY,                       XK_p,      togglebar,      {0} },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_l,      focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_comma,      incnmaster,     {.i = +1 } },
 	{ MODKEY,                       XK_m,      incnmaster,     {.i = -1 } },
+	{ MODKEY,                       XK_b,      incntile,     {.i = +1 } },
+	{ MODKEY,                       XK_n,      incntile,     {.i = -1 } },
 	{ MODKEY,                       XK_period,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_slash,      setmfact,       {.f = +0.05} },
 	{ MODKEY|ShiftMask,                       XK_Return, zoom,           {0} },
