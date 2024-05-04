@@ -79,6 +79,7 @@ static const char *webcmd[]  = { "firefox", NULL };
 static const char *emojicmd[] = {"/home/void/dev/bash/emoji.sh",NULL};
 
 #include "selfrestart.c"
+#include "push.c"
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -89,6 +90,8 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_l,      focusstack,     {.i = -1 } },
+	{ MODKEY|ShiftMask,                       XK_k,      pushdown,     {0} },
+	{ MODKEY|ShiftMask,                       XK_l,      pushup,     {0} },
 	{ MODKEY,                       XK_comma,      incnmaster,     {.i = +1 } },
 	{ MODKEY,                       XK_m,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_period,      setmfact,       {.f = -0.05} },
