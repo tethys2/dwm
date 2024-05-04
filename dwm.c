@@ -115,6 +115,7 @@ typedef struct {
 struct Monitor {
 	char ltsymbol[16];
 	float mfact;
+	int attachdirection;
 	int nmaster;
 	int num;
 	int by;               /* bar geometry */
@@ -183,6 +184,7 @@ static int gettextprop(Window w, Atom atom, char *text, unsigned int size);
 static void grabbuttons(Client *c, int focused);
 static void grabkeys(void);
 static void incnmaster(const Arg *arg);
+static void setattach(const Arg *arg);
 static void keypress(XEvent *e);
 static void killclient(const Arg *arg);
 static void manage(Window w, XWindowAttributes *wa);
@@ -744,6 +746,7 @@ createmon(void)
 	m = ecalloc(1, sizeof(Monitor));
 	m->tagset[0] = m->tagset[1] = 1;
 	m->mfact = mfact;
+	m->attachdirection = attachdirection;
 	m->nmaster = nmaster;
 	m->showbar = showbar;
 	m->topbar = topbar;
@@ -1091,6 +1094,12 @@ incnmaster(const Arg *arg)
 	arrange(selmon);
 }
 
+void
+setattach(const Arg *arg)
+{
+	selmon->attachdirection = arg->i;
+}
+
 #ifdef XINERAMA
 static int
 isuniquegeom(XineramaScreenInfo *unique, size_t n, XineramaScreenInfo *info)
@@ -1181,7 +1190,7 @@ manage(Window w, XWindowAttributes *wa)
 		c->isfloating = c->oldstate = trans != None || c->isfixed;
 	if (c->isfloating)
 		XRaiseWindow(dpy, c->win);
-	switch(attachdirection){
+	switch(c-> mon-> attachdirection){
 		case 1:
 			attachabove(c);
 			break;
@@ -1572,7 +1581,7 @@ sendmon(Client *c, Monitor *m)
 	detachstack(c);
 	c->mon = m;
 	c->tags = m->tagset[m->seltags]; /* assign tags of target monitor */
-	switch(attachdirection){
+	switch(m-> attachdirection){
 		case 1:
 			attachabove(c);
 			break;
@@ -2105,7 +2114,7 @@ updategeom(void)
 				m->clients = c->next;
 				detachstack(c);
 				c->mon = mons;
-				switch(attachdirection){
+				switch(m-> attachdirection){
 					case 1:
 						attachabove(c);
 						break;
