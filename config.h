@@ -24,6 +24,7 @@ static const char *const autostart[] = {
 	"slstatus", NULL,
 	"picom", NULL,
 	"xwallpaper","--zoom", "/home/void/Pictures/backgrounds/arctic.jpg", NULL,
+	"xbanish", NULL,
 	NULL /* terminate */
 };
 
