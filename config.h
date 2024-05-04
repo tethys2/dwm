@@ -50,13 +50,14 @@ static const int resizehints = 1;    /* 1 means respect size hints in tiled resi
 static const int attachdirection = 0;    /* 0 default, 1 above, 2 aside, 3 below, 4 bottom, 5 top */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
 
-#include "fibonacci.c"
+#include "layouts.c"
 static const Layout layouts[] = {
 	/* symbol     arrange function */
  	{ "[@]",      fibonacci },
 	{ "[]=",      tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
+	{ "[u]=",      tileu },    /* first entry is default */
 
 };
 
@@ -103,6 +104,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_h,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_g,      setlayout,      {.v = &layouts[3]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[0]} },
+	{ MODKEY|ShiftMask,                       XK_d,      setlayout,      {.v = &layouts[4]} },
 	{ MODKEY,                       XK_v,      setattach,      {.i = 0} },
 	{ MODKEY,                       XK_c,      setattach,      {.i = 5} },
 	{ MODKEY,                       XK_x,      setattach,      {.i = 4} },
