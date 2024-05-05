@@ -23,7 +23,7 @@ static const char *colors[][3]      = {
 static const char *const autostart[] = {
 	"slstatus", NULL,
 	"picom", NULL,
-	"xwallpaper","--zoom", "/home/void/Pictures/backgrounds/arctic.jpg", NULL,
+	"xwallpaper","--zoom", "/home/void/.config/wallpaper", NULL,
 	"xbanish", NULL,
 	NULL /* terminate */
 };
@@ -78,6 +78,7 @@ static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont,
 static const char *termcmd[]  = { "st", NULL };
 static const char *webcmd[]  = { "firefox", NULL };
 static const char *emojicmd[] = {"/home/void/dev/bash/emoji.sh",NULL};
+static const char *bgcmd[] = {"nsxiv", "-rt", "/home/void/Pictures/bg/", NULL};
 
 #include "selfrestart.c"
 #include "push.c"
@@ -88,6 +89,7 @@ static const Key keys[] = {
 	{ MODKEY,             		XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,             		XK_w, spawn,          {.v = webcmd } },
 	{ MODKEY,             		XK_e, spawn,          {.v = emojicmd }},
+	{ MODKEY|ShiftMask,             XK_b, spawn,          {.v = bgcmd }},
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_l,      focusstack,     {.i = -1 } },
