@@ -6,18 +6,19 @@ static const unsigned int gappx     = 40;        /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "SpaceMono Nerd Font:size=10" };
+static const char *fonts[]          = {"SpaceMono Nerd Font:size=10"};
 static const char dmenufont[]       = "SpaceMono Nerd Font:size=10";
 
-static const char col_gray1[]       = "#3b4252";
-static const char col_gray2[]       = "#434c5e";
-static const char col_gray3[]       = "#eceff4";
-static const char col_gray4[]       = "#eceff4";
-static const char col_cyan[]        = "#88c0d0";
-static const char *colors[][3]      = {
+static char normbgcolor[]       = "#3b4252";
+static char normbordercolor[]       = "#434c5e";
+static char normfgcolor[]       = "#eceff4";
+static char selfgcolor[]       = "#eceff4";
+static char selbordercolor[]        = "#88c0d0";
+static char selbgcolor[]        = "#88c0d0";
+static char *colors[][3]      = {
 	/*               fg         bg         border   */
-	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
+       [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
+       [SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor  },
 };
 
 static const char *const autostart[] = {
@@ -25,6 +26,7 @@ static const char *const autostart[] = {
 	"picom", NULL,
 	"xwallpaper","--zoom", "/home/void/.config/wallpaper", NULL,
 	"xbanish", NULL,
+	"xrdb", "-load", "/home/void/.Xresources", NULL,
 	NULL /* terminate */
 };
 
@@ -74,11 +76,32 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char *webcmd[]  = { "firefox", NULL };
 static const char *emojicmd[] = {"/home/void/dev/bash/emoji.sh",NULL};
 static const char *bgcmd[] = {"nsxiv", "-rt", "/home/void/Pictures/bg/", NULL};
+
+/*
+ * Xresources preferences to load at startup
+ */
+ResourcePref resources[] = {
+		//{ "font",               STRING,  &font },
+		//{ "dmenufont",          STRING,  &dmenufont },
+		{ "normbgcolor",        STRING,  &normbgcolor },
+		{ "normbordercolor",    STRING,  &normbordercolor },
+		{ "normfgcolor",        STRING,  &normfgcolor },
+		{ "selbgcolor",         STRING,  &selbgcolor },
+		{ "selbordercolor",     STRING,  &selbordercolor },
+		{ "selfgcolor",         STRING,  &selfgcolor },
+		//{ "borderpx",          	INTEGER, &borderpx },
+		//{ "snap",          		INTEGER, &snap },
+		//{ "showbar",          	INTEGER, &showbar },
+		//{ "topbar",          	INTEGER, &topbar },
+		//{ "nmaster",          	INTEGER, &nmaster },
+		//{ "resizehints",       	INTEGER, &resizehints },
+		//{ "mfact",      	 	FLOAT,   &mfact },
+};
 
 #include "selfrestart.c"
 #include "push.c"
