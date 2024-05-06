@@ -78,7 +78,7 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char *webcmd[]  = { "firefox", NULL };
-static const char *emojicmd[] = {"/home/void/dev/bash/emoji.sh",NULL};
+static const char *emojicmd[] = {"/home/void/dev/sh/emoji.sh",NULL};
 static const char *bgcmd[] = {"nsxiv", "-rt", "/home/void/Pictures/bg/", NULL};
 
 /*
