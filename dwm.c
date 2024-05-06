@@ -259,6 +259,7 @@ static int xerror(Display *dpy, XErrorEvent *ee);
 static int xerrordummy(Display *dpy, XErrorEvent *ee);
 static int xerrorstart(Display *dpy, XErrorEvent *ee);
 static void zoom(const Arg *arg);
+static void xrdb(const Arg *arg);
 static void load_xresources(void);
 static void resource_load(XrmDatabase db, char *name, enum resource_type rtype, void *dst);
 static void autostart_exec(void);
@@ -2392,6 +2393,18 @@ zoom(const Arg *arg)
 }
 
 void
+xrdb(const Arg *arg)
+{
+	load_xresources();
+
+	for (int i = 0; i < LENGTH(colors); i++)
+	scheme[i] = drw_scm_create(drw, colors[i], 3);
+
+	focus(NULL);
+	arrange(NULL);
+}
+
+void
 resource_load(XrmDatabase db, char *name, enum resource_type rtype, void *dst)
 {
 	char *sdst = NULL;
@@ -2458,8 +2471,8 @@ main(int argc, char *argv[])
 		die("dwm: cannot open display");
 	checkotherwm();
 	XrmInitialize();
-	autostart_exec();
 	load_xresources();
+	autostart_exec();
 	setup();
 #ifdef __OpenBSD__
 	if (pledge("stdio rpath proc exec", NULL) == -1)

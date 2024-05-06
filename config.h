@@ -26,7 +26,6 @@ static const char *const autostart[] = {
 	"picom", NULL,
 	"xwallpaper","--zoom", "/home/void/.config/wallpaper", NULL,
 	"xbanish", NULL,
-	"xrdb", "-load", "/home/void/.Xresources", NULL,
 	NULL /* terminate */
 };
 
@@ -159,6 +158,8 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
+	{ MODKEY,			XK_t,		spawn,	{.v = (const char*[]){"xrdb","-load","/home/void/.Xresources", NULL} }	 },
+	{ MODKEY,			XK_t,		xrdb,		{.v = NULL } },
 	{ MODKEY|ShiftMask,		XK_r,       self_restart,   {0} },
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 };
