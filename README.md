@@ -3,10 +3,34 @@ Toby's DWM config
 
 Enjoy a small window manager with actual sane defaults.
 
+Added features
+--------------
+### Base:
++ fibonacci layout
++ bottom stack layout
++ attach window in 6 different ways
++ actual full screen
++ status monitor on all screens
++ show the current selected monitor even with no windows
++ self restart
++ auto start programs
++ get colors from xresources
++ push window up or down
++ window gaps
+### Autostart:
++ picom
++ xbanish
++ xwallpaper --zoom ~/.config/wallpaper
++ xrdb -set ~/Xresources
+### External: 
++ mod + e : Emoji picker script
++ mod + shift + b : background picker
+    
+
 Default Programs
 ------------------
 
-Kitty, dmenu, picom, xwallpaper 
+Kitty, dmenu, picom, xwallpaper, xbanish, xrdb 
 
 Read the original README below
 
