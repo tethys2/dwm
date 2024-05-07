@@ -61,7 +61,7 @@ static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen win
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "[]=",      tile },    /* first entry is default */
-	{ "><>",      NULL },    /* no layout function means floating behavior */
+	//{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
 	{ "[@]",      spiral },
 	{ "[\\]",     dwindle },
@@ -143,13 +143,15 @@ static const Key keys[] = {
 	{ MODKEY,             XK_p,      setcfact,       {.f = +0.25} },
 	{ MODKEY,             XK_o,      setcfact,       {.f = -0.25} },
 	{ MODKEY,             XK_i,      setcfact,       {.f =  0.00} },
-	{ MODKEY,                       XK_Return, zoom,           {0} },
+	{ MODKEY|ShiftMask,                       XK_Return, zoom,           {0} },
 	{ MODKEY|Mod4Mask,              XK_equal,      incrgaps,       {.i = +1 } },
 	{ MODKEY|Mod4Mask,    XK_minus,      incrgaps,       {.i = -1 } },
 	{ MODKEY|Mod4Mask|ShiftMask,              XK_minus,      togglegaps,     {0} },
 	{ MODKEY|Mod4Mask|ShiftMask,    XK_equal,      defaultgaps,    {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
-	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
+	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },	
+	{ MODKEY,                       XK_d,  setlayout,      {.v = &layouts[0]} },
+	{ MODKEY,                       XK_f,  setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,		XK_a,  cyclelayout,    {.i = -1 } },
 	{ MODKEY,           XK_s, cyclelayout,    {.i = +1 } },
 	{ MODKEY,                       XK_v,      setattach,      {.i = 0} },
