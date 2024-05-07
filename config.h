@@ -80,6 +80,7 @@ static const char *termcmd[]  = { "st", NULL };
 static const char *webcmd[]  = { "firefox", NULL };
 static const char *emojicmd[] = {"/home/void/dev/sh/emoji.sh",NULL};
 static const char *bgcmd[] = {"nsxiv", "-rt", "/home/void/Pictures/bg/", NULL};
+static const char *themecmd[] = {"/home/void/dev/sh/theme.sh", NULL};
 
 /*
  * Xresources preferences to load at startup
@@ -112,6 +113,7 @@ static const Key keys[] = {
 	{ MODKEY,             		XK_w, spawn,          {.v = webcmd } },
 	{ MODKEY,             		XK_e, spawn,          {.v = emojicmd }},
 	{ MODKEY|ShiftMask,             XK_b, spawn,          {.v = bgcmd }},
+	{ MODKEY,             		XK_t, spawn,          {.v = themecmd }},
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_l,      focusstack,     {.i = -1 } },
@@ -158,8 +160,8 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
-	{ MODKEY,			XK_t,		spawn,	{.v = (const char*[]){"xrdb","-load","/home/void/.Xresources", NULL} }	 },
-	{ MODKEY,			XK_t,		xrdb,		{.v = NULL } },
+	{ MODKEY|ControlMask,			XK_t,		spawn,	{.v = (const char*[]){"xrdb","-load","/home/void/.Xresources", NULL} }	 },
+	{ MODKEY|ShiftMask,			XK_t,		xrdb,		{.v = NULL } },
 	{ MODKEY|ShiftMask,		XK_r,       self_restart,   {0} },
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 };
