@@ -564,9 +564,77 @@ dwindle(Monitor *m)
 }
 
 void
-spiral(Monitor *m)
-{
-	fibonacci(m, 0);
+spiral(Monitor *m) {
+	unsigned int i, n, mh,h, w, x, y, mw, my;
+	// mh is the master height mw is master my is accumulated master height width h is tile height w is tile width x is tile x y is tile y  
+	Client *c;
+	int oh, ov, ih, iv;
+
+	getgaps(m, &oh, &ov, &ih, &iv, &n);
+	//if there is clients in the stack
+	if (n > m->nmaster)
+		//if there are masters then set the master width to the workspace width times the ratio otherwise zero
+		mw = m->nmaster ? m->ww * m->mfact : 0;
+	else
+		//master width is the whole workspace
+		mw = m->ww - 2 * ov;
+	//move the top right corner of stack to where it should be
+	x = mw + ov + iv;
+	y = oh;
+	h = (m ->wh) - 2 * oh;
+	w = (m ->ww) - mw - 2 * ov -iv;  
+	//loop through all of the windows
+	for (i = 0, my = oh, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++)
+		// if a master window
+		if (i < m->nmaster) {
+			mh = (m->wh - my) / (MIN(n, m->nmaster) - i) - oh;
+			resize(c, m->wx + ov, m->wy + my, mw - (2*c->bw), mh - (2*c->bw), 0);
+			
+			if (my + HEIGHT(c) + oh < m->wh)
+				my += HEIGHT(c) + ih;
+		}
+		else{
+			//make sure this is not the last window
+			if(i < n -1){
+				//switch between 4 different kinds of splits repeating after the masters
+				//each split decreases the size and then moves the next window top corner
+				//this makes handling the last window really easy
+				switch((i - m->nmaster) % 4){
+					case 0:
+						h /= 2;
+						if(h > ih/2)
+							h -= ih/2;
+						resize(c, m->wx + x, m->wy + y, w - (2*c->bw), h - (2*c->bw), 0);
+						y += h + ih;
+						break;
+					case 1:	
+						//the stored top left corner stays the same the window just artificialy goes to the right
+						w /= 2;
+						if(w > iv/2)
+							w -= iv/2;
+						resize(c, m->wx + x + w + iv, m->wy + y, w - (2*c->bw), h - (2*c->bw), 0);
+						break;
+					case 2:
+						//the stored top left corner stays the same the window just artificialy goes to the bottom
+						h /= 2;
+						if(h > ih/2)
+							h -= ih/2;
+						resize(c, m->wx + x, m->wy + y + h + ih, w - (2*c->bw), h - (2*c->bw), 0);
+						break;
+					case 3:
+						w /= 2;
+						if(w > iv/2)
+							w -= iv/2;
+						resize(c, m->wx + x, m->wy + y, w - (2*c->bw), h - (2*c->bw), 0);
+						x += w + iv;
+						break;
+				}
+			}
+			else{
+				//this will cause the window to use the rest of the space and not make another spit
+				resize(c, m->wx + x, m->wy + y, w - (2*c->bw), h - (2*c->bw), 0);
+			}
+		}
 }
 
 /*
